@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Productivity Time Management Suite</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
+
+body{
+
+background:linear-gradient(135deg,#667eea,#764ba2,#00c6ff);
+
+background-size:300% 300%;
+
+animation:bg 8s infinite alternate;
+
+color:white;
+
+text-align:center;
+
+}
+
+
+@keyframes bg{
+
+100%{
+background-position:right;
+}
+
+}
+
+
+
+header{
+
+padding:40px;
+
+}
+
+
+h1{
+
+font-size:40px;
+
+color:#ffd700;
+
+text-shadow:0 0 20px white;
+
+}
+
+
+
+.container{
+
+width:90%;
+
+margin:auto;
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+gap:25px;
+
+}
+
+
+
+.card{
+
+background:rgba(255,255,255,.18);
+
+padding:25px;
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+
+box-shadow:0 10px 30px #0005;
+
+transition:.3s;
+
+}
+
+
+.card:hover{
+
+transform:translateY(-10px);
+
+box-shadow:0 0 25px cyan;
+
+}
+
+
+
+h2{
+
+color:#ffd700;
+
+margin-bottom:20px;
+
+}
+
+
+
+.clock{
+
+font-size:45px;
+
+font-weight:bold;
+
+text-shadow:0 0 20px cyan;
+
+}
+
+
+
+input{
+
+padding:12px;
+
+border-radius:20px;
+
+border:none;
+
+text-align:center;
+
+}
+
+
+
+button{
+
+padding:12px 20px;
+
+margin:5px;
+
+border:none;
+
+border-radius:25px;
+
+cursor:pointer;
+
+background:linear-gradient(45deg,#ff512f,#dd2476);
+
+color:white;
+
+font-weight:bold;
+
+}
+
+
+
+button:hover{
+
+transform:scale(1.1);
+
+}
+
+
+
+.world{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:10px;
+
+}
+
+
+.box{
+
+background:#ffffff33;
+
+padding:15px;
+
+border-radius:15px;
+
+}
+
+
+
+.progress{
+
+height:15px;
+
+background:white;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+
+#bar{
+
+height:100%;
+
+width:0%;
+
+background:#00ff99;
+
+}
+
+
+
+.dashboard{
+
+display:flex;
+
+gap:15px;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+}
+
+
+.stat{
+
+padding:20px;
+
+border-radius:15px;
+
+background:#2196f3;
+
+}
+
+
+footer{
+
+margin-top:40px;
+
+padding:20px;
+
+background:#0005;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+⏰ Productivity Time Management Suite
+</h1>
+
+<p>
+Manage your time efficiently with smart productivity tools
+</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+
+<div class="card">
+
+<h2>🕒 Digital Clock</h2>
+
+<div class="clock" id="clock">
+00:00:00
+</div>
+
+<p id="date"></p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🌍 World Clock</h2>
+
+
+<div class="world">
+
+<div class="box">
+🇮🇳 India
+<p id="india"></p>
+</div>
+
+
+<div class="box">
+🇬🇧 London
+<p id="london"></p>
+</div>
+
+
+<div class="box">
+🇺🇸 New York
+<p id="ny"></p>
+</div>
+
+
+<div class="box">
+🇯🇵 Tokyo
+<p id="tokyo"></p>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>⏱ Stopwatch</h2>
+
+<div class="clock" id="stop">
+00:00:00
+</div>
+
+
+<button onclick="startStop()">Start</button>
+
+<button onclick="pauseStop()">Pause</button>
+
+<button onclick="resetStop()">Reset</button>
+
+<button onclick="lap()">Lap</button>
+
+
+<ul id="laps"></ul>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>⏳ Countdown</h2>
+
+
+<input id="min" placeholder="Minutes">
+
+
+<h1 id="count">
+00:00
+</h1>
+
+
+<button onclick="startCount()">Start</button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🔔 Alarm</h2>
+
+
+<input type="time" id="alarm">
+
+
+<button onclick="setAlarm()">
+Set Alarm
+</button>
+
+
+<p id="alarmText">
+No Alarm
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>🍅 Pomodoro</h2>
+
+
+<div class="clock" id="pomo">
+25:00
+</div>
+
+
+<div class="progress">
+
+<div id="bar"></div>
+
+</div>
+
+
+<button onclick="startPomo()">
+Start
+</button>
+
+
+<button onclick="resetPomo()">
+Reset
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>📖 Session History</h2>
+
+<ul id="history"></ul>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>📊 Dashboard</h2>
+
+
+<div class="dashboard">
+
+
+<div class="stat">
+
+Sessions
+
+<h2 id="sessions">
+0
+</h2>
+
+</div>
+
+
+<div class="stat">
+
+Focus
+
+<h2 id="focus">
+0 min
+</h2>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<footer>
+
+<h2>
+Designed by Samidha Suryawanshi
+</h2>
+
+<p>
+USN : CS24232
+</p>
+
+</footer>
+
+
+
+
+
+<script>
+
+
+// DIGITAL CLOCK
+
+function clock(){
+
+let d=new Date();
+
+document.getElementById("clock").innerHTML=
+d.toLocaleTimeString();
+
+
+document.getElementById("date").innerHTML=
+d.toDateString();
+
+
+india.innerHTML=
+d.toLocaleTimeString("en-US",{timeZone:"Asia/Kolkata"});
+
+
+london.innerHTML=
+d.toLocaleTimeString("en-US",{timeZone:"Europe/London"});
+
+
+ny.innerHTML=
+d.toLocaleTimeString("en-US",{timeZone:"America/New_York"});
+
+
+tokyo.innerHTML=
+d.toLocaleTimeString("en-US",{timeZone:"Asia/Tokyo"});
+
+}
+
+setInterval(clock,1000);
+
+
+
+// STOPWATCH
+
+
+let s=0;
+let timer;
+
+
+function startStop(){
+
+timer=setInterval(()=>{
+
+s++;
+
+let h=Math.floor(s/3600);
+
+let m=Math.floor((s%3600)/60);
+
+let sec=s%60;
+
+
+stop.innerHTML=
+`${h}:${m}:${sec}`;
+
+
+},1000)
+
+}
+
+
+function pauseStop(){
+
+clearInterval(timer);
+
+}
+
+
+function resetStop(){
+
+clearInterval(timer);
+
+s=0;
+
+stop.innerHTML="00:00:00";
+
+}
+
+
+function lap(){
+
+let li=document.createElement("li");
+
+li.innerHTML=stop.innerHTML;
+
+laps.appendChild(li);
+
+}
+
+
+
+
+// COUNTDOWN
+
+
+function startCount(){
+
+let time=min.value*60;
+
+
+let x=setInterval(()=>{
+
+
+let m=Math.floor(time/60);
+
+let s=time%60;
+
+
+count.innerHTML=
+m+":"+s;
+
+
+time--;
+
+
+if(time<0)
+clearInterval(x);
+
+
+},1000)
+
+
+}
+
+
+
+
+// ALARM
+
+
+function setAlarm(){
+
+alarmText.innerHTML=
+"Alarm Set : "+alarm.value;
+
+}
+
+
+
+
+// POMODORO
+
+
+let p=1500;
+
+
+function startPomo(){
+
+
+let x=setInterval(()=>{
+
+
+p--;
+
+
+let m=Math.floor(p/60);
+
+let s=p%60;
+
+
+pomo.innerHTML=
+m+":"+s;
+
+
+bar.style.width=
+((1500-p)/1500*100)+"%";
+
+
+
+if(p<=0){
+
+clearInterval(x);
+
+sessions.innerHTML++;
+
+}
+
+
+},1000);
+
+
+}
+
+
+
+function resetPomo(){
+
+p=1500;
+
+pomo.innerHTML="25:00";
+
+bar.style.width="0%";
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
